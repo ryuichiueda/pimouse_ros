@@ -1,26 +1,13 @@
 #!/usr/bin/env python
-#encoding: utf8                 #長くてコメントが増えそうなので入れました
 import sys, rospy
 from pimouse_ros.msg import LightSensorValues
-
-def get_freq():    #この関数を追加
-    f = rospy.get_param('lightsensors_freq',10)
-    try:
-        if f <= 0.0:
-            raise Exception()
-    except:
-        rospy.logerr("value error: lightsensors_freq")
-        sys.exit(1)
-
-    return f
 
 if __name__ == '__main__':
     devfile = '/dev/rtlightsensor0'
     rospy.init_node('lightsensors')
     pub = rospy.Publisher('lightsensors', LightSensorValues, queue_size=1)
-
-    freq = get_freq()        #追加
-    rate = rospy.Rate(freq)  #rate = rospy.Rate(10)から書き換え
+    
+    rate = rospy.Rate(10)
     while not rospy.is_shutdown():
         try:
             with open(devfile,'r') as f:
@@ -36,10 +23,5 @@ if __name__ == '__main__':
                 pub.publish(d)
         except IOError:
             rospy.logerr("cannot write to " + devfile)
-
-        f = get_freq()                 #ここから4行追加
-        if f != freq:
-            freq = f
-            rate = rospy.Rate(freq)    #ここまで
     
         rate.sleep()
