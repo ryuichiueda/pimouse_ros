@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="pimouse_ros" name="buzzer" type="buzzer.py" required="true" />
+  <test test-name="test_buzzer" pkg="pimouse_ros" type="travis_test_buzzer.py" />
+</launch>
