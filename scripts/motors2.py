@@ -72,3 +72,7 @@ if __name__ == '__main__':
             m.set_raw_freq(0,0)
             m.using_cmd_vel = False
         rate.sleep()
+
+# Copyright 2016 Ryuichi Ueda
+# Released under the BSD License.
+# To make line numbers be identical with the book, this statement is written here. Don't move it to the header.
